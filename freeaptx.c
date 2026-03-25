@@ -1275,7 +1275,7 @@ size_t aptx_decode_sync(struct aptx_context *ctx, const unsigned char *input, si
 
     /* Main decode loop, decode as much as possible samples, if decoding fails restart it on next byte */
     while (ipos + sample_size <= input_size && (opos + 3*NB_CHANNELS*4 <= output_size || ctx->decode_skip_leading > 0 || ctx->decode_dropped > 0)) {
-        input_size_step = (((output_size - opos) / 3*NB_CHANNELS*4) + ctx->decode_skip_leading) * sample_size;
+        input_size_step = (((output_size - opos) / (3*NB_CHANNELS*4)) + ctx->decode_skip_leading) * sample_size;
         if (input_size_step > ((input_size - ipos) / sample_size) * sample_size)
             input_size_step = ((input_size - ipos) / sample_size) * sample_size;
         if (input_size_step > ((LATENCY_SAMPLES+3)/4 - ctx->decode_sync_packets) * sample_size && ctx->decode_dropped > 0)
